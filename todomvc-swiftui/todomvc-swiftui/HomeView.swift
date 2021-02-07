@@ -49,18 +49,21 @@ struct HomeView: View {
         //                        .shadow(color: Color.primary.opacity(0.15), radius: 1, x: 0, y: 2)
                                 
                                 ZStack {
-                                    Color(UIColor.systemBackground)
-                                        .padding(.horizontal, 8)
-                                        .offset(y: 8)
-                                        .modifier(ShadowModifier(style: .small))
-                                    
-                                    Color(UIColor.systemBackground)
-                                        .padding(.horizontal, 4)
-                                        .offset(y: 4)
-                                        .modifier(ShadowModifier(style: .small))
-                                    
-                                    Color(UIColor.systemBackground)
-                                        .modifier(ShadowModifier(style: .small))
+                                    ZStack {
+                                        Color(UIColor.systemBackground)
+                                            .padding(.horizontal, 8)
+                                            .offset(y: 8)
+                                            .modifier(ShadowModifier(style: .small))
+                                        
+                                        Color(UIColor.systemBackground)
+                                            .padding(.horizontal, 4)
+                                            .offset(y: 4)
+                                            .modifier(ShadowModifier(style: .small))
+                                        
+                                        Color(UIColor.systemBackground)
+                                            .modifier(ShadowModifier(style: .small))
+                                    }
+                                    .isHidden(todos.count == 0)
                                     
                                     LazyVStack(spacing: 0) {
                                         ForEach(todos.indices, id: \.self) { index in
@@ -68,7 +71,7 @@ struct HomeView: View {
                                         }
                                         
                                         HStack {
-                                            Text("13 items left")
+                                            Text("\(todos.filter{ !$0.isCompleted }.count) items left")
                                             Spacer()
                                             HStack {
                                                 Button(action: {}) {
@@ -92,6 +95,7 @@ struct HomeView: View {
                                                 Text("Clear completed")
                                             }
                                         }
+                                        .isHidden(todos.count == 0)
                                         .padding(10.0)
                                         .modifier(FontModifier(style: .footnote))
                                         .foregroundColor(Color.primary.opacity(0.3))
@@ -171,18 +175,18 @@ struct Todo: Identifiable {
     var title: String
 }
 
-var todosData = [
-    Todo(isCompleted: true, title: "display header and footer"),
-    Todo(isCompleted: false, title: "hide list and footer if no todos"),
-    Todo(isCompleted: false, title: "display counter"),
-    Todo(isCompleted: false, title: "filter todo by status"),
+var todosData: [Todo] = [
+//    Todo(isCompleted: true, title: "display header and footer"),
+    Todo(isCompleted: true, title: "hide list and footer if no todos"),
+    Todo(isCompleted: true, title: "display counter"),
+    Todo(isCompleted: true, title: "filter todo by status"),
     Todo(isCompleted: false, title: "add todo items"),
     Todo(isCompleted: false, title: "delete todo items"),
     Todo(isCompleted: false, title: "edit todo items"),
-    Todo(isCompleted: false, title: "mark todo as compelted"),
-    Todo(isCompleted: false, title: "mark all todos as compelted"),
-    Todo(isCompleted: false, title: "clear compelted"),
-    Todo(isCompleted: false, title: "store todo persistently"),
+//    Todo(isCompleted: false, title: "mark todo as compelted"),
+//    Todo(isCompleted: false, title: "mark all todos as compelted"),
+//    Todo(isCompleted: false, title: "clear compelted"),
+//    Todo(isCompleted: false, title: "store todo persistently"),
     
     
 ]
