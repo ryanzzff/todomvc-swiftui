@@ -22,97 +22,101 @@ struct HomeView: View {
                     .foregroundColor(Color("TitleColor"))
                 
                 ZStack {
-                    Color(UIColor.systemBackground)
-                        .padding(.horizontal, 8)
-                        .offset(y: 8)
-                        .modifier(ShadowModifier(style: .small))
-                    
-                    Color(UIColor.systemBackground)
-                        .padding(.horizontal, 4)
-                        .offset(y: 4)
-                        .modifier(ShadowModifier(style: .small))
-                    
-                    Color(UIColor.systemBackground)
-                        .modifier(ShadowModifier(style: .small))
-                    
                     VStack(spacing: 0.0) {
-                        HStack(spacing: 20.0) {
-                            Button(action: {
-                                // TODO: toggle all button action
-                            }) {
-                                Text("❯").rotationEffect(.degrees(90))
-                                    .modifier(FontModifier(style: .title2))
-                            }
-                            .opacity(todos.count > 0 ? 1 : 0)
-                            .frame(width: 40.0, height: 40.0)
-                            
-                            
-                            Text("What needs to be done?")
-                                .italic()
-                                .modifier(FontModifier(style: .title))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        .padding(10.0)
-                        .foregroundColor(Color.primary.opacity(0.3))
-                        .background(Color(UIColor.systemBackground))
-                        .overlay(Divider(), alignment: .bottom)
-                        .modifier(ShadowModifier(style: .small))
-//                        .shadow(color: Color.primary.opacity(0.15), radius: 1, x: 0, y: 2)
-                        
                         ScrollView() {
-                            LazyVStack(spacing: 0) {
-                                ForEach(todos.indices, id: \.self) { index in
-                                    TodoItemView(todo: $todos[index])
-                                }
-                                
-                                HStack {
-                                    Text("13 items left")
-                                    Spacer()
-                                    HStack {
-                                        Button(action: {}) {
-                                            Text("All")
-                                        }
-                                        .padding(.horizontal, 7)
-                                        .padding(.vertical, 3)
-                                        .overlay(RoundedRectangle(cornerRadius: 3, style: .continuous).stroke(Color("TitleColor")))
-                                        
-                                        Button(action: {}) {
-                                            Text("Active")
-                                        }
-                                        Button(action: {}) {
-                                            Text("Completed")
-                                        }
-                                    }
-                                    Spacer()
+                            VStack(spacing: 0.0) {
+                                HStack(spacing: 20.0) {
                                     Button(action: {
-                                        // TODO: clear completed
+                                        // TODO: toggle all button action
                                     }) {
-                                        Text("Clear completed")
+                                        Text("❯").rotationEffect(.degrees(90))
+                                            .modifier(FontModifier(style: .title2))
                                     }
+                                    .opacity(todos.count > 0 ? 1 : 0)
+                                    .frame(width: 40.0, height: 40.0)
+                                    
+                                    
+                                    Text("What needs to be done?")
+                                        .italic()
+                                        .modifier(FontModifier(style: .title))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(10.0)
+                                .foregroundColor(Color.primary.opacity(0.3))
+                                .background(Color(UIColor.systemBackground))
+                                .overlay(Divider(), alignment: .bottom)
+                                .modifier(ShadowModifier(style: .small))
+        //                        .shadow(color: Color.primary.opacity(0.15), radius: 1, x: 0, y: 2)
+                                
+                                ZStack {
+                                    Color(UIColor.systemBackground)
+                                        .padding(.horizontal, 8)
+                                        .offset(y: 8)
+                                        .modifier(ShadowModifier(style: .small))
+                                    
+                                    Color(UIColor.systemBackground)
+                                        .padding(.horizontal, 4)
+                                        .offset(y: 4)
+                                        .modifier(ShadowModifier(style: .small))
+                                    
+                                    Color(UIColor.systemBackground)
+                                        .modifier(ShadowModifier(style: .small))
+                                    
+                                    LazyVStack(spacing: 0) {
+                                        ForEach(todos.indices, id: \.self) { index in
+                                            TodoItemView(todo: $todos[index])
+                                        }
+                                        
+                                        HStack {
+                                            Text("13 items left")
+                                            Spacer()
+                                            HStack {
+                                                Button(action: {}) {
+                                                    Text("All")
+                                                }
+                                                .padding(.horizontal, 7)
+                                                .padding(.vertical, 3)
+                                                .overlay(RoundedRectangle(cornerRadius: 3, style: .continuous).stroke(Color("TitleColor")))
+                                                
+                                                Button(action: {}) {
+                                                    Text("Active")
+                                                }
+                                                Button(action: {}) {
+                                                    Text("Completed")
+                                                }
+                                            }
+                                            Spacer()
+                                            Button(action: {
+                                                // TODO: clear completed
+                                            }) {
+                                                Text("Clear completed")
+                                            }
+                                        }
+                                        .padding(10.0)
+                                        .modifier(FontModifier(style: .footnote))
+                                        .foregroundColor(Color.primary.opacity(0.3))
+                                    }
+                                    .padding(0.0)
+                                }
+                                
+                                Spacer()
+                                
+                                VStack(spacing: 10.0) {
+                                    Text("Double-click to edit a todo")
+                                    HStack(spacing: 4.0) {
+                                        Text("Written by")
+                                        Text("Ryan Lee").bold()
+                                    }
+                                    Text("TodoMVC").bold()
+                                }
                                 .modifier(FontModifier(style: .footnote))
                                 .foregroundColor(Color.primary.opacity(0.3))
+                                .padding(.top, 60)
                             }
-                            .padding(0.0)
                         }
                     }
                 }
                 .frame(maxWidth: 550)
-                
-                Spacer()
-                
-                VStack(spacing: 10.0) {
-                    Text("Double-click to edit a todo")
-                    HStack(spacing: 4.0) {
-                        Text("Written by")
-                        Text("Ryan Lee").bold()
-                    }
-                    Text("TodoMVC").bold()
-                }
-                .modifier(FontModifier(style: .footnote))
-                .foregroundColor(Color.primary.opacity(0.3))
-                .padding(.top, 60)
             }.frame(maxWidth: .infinity)
             .modifier(ShadowModifier())
         }
