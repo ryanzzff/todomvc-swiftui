@@ -20,8 +20,13 @@ struct HomeView: View {
                     .font(.custom("HelveticaNeue-Thin", size: 100, relativeTo: .largeTitle))
                     .foregroundColor(Color("TitleColor"))
                 
-                List(0 ..< 15) { item in
-                    TodoItemView()
+                ScrollView() {
+                    LazyVStack(spacing: 0) {
+                        ForEach(0 ..< 15) { (index) in
+                            TodoItemView()
+                        }
+                    }
+                    .padding(0.0)
                 }
                 
                 Spacer()
@@ -52,17 +57,22 @@ struct HomeView_Previews: PreviewProvider {
 
 struct TodoItemView: View {
     var body: some View {
-        HStack(spacing: 20.0) {
-            Button(action: {
-                // TODO: button action
-            }) {
-                Circle()
-                    .strokeBorder(Color.primary.opacity(0.3), lineWidth: 1)
+        VStack() {
+            HStack(spacing: 20.0) {
+                Button(action: {
+                    // TODO: button action
+                }) {
+                    Circle()
+                        .strokeBorder(Color.primary.opacity(0.3), lineWidth: 1)
+                }
+                .frame(width: 40.0, height: 40.0)
+                
+                Text("todo item")
+                    .font(.custom("HelveticaNeue-Thin", size: 28, relativeTo: .title))
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(width: 40.0, height: 40.0)
-            Text("todo item")
-                .font(.custom("HelveticaNeue-Thin", size: 28, relativeTo: .title))
+            .padding(10.0)
+            .overlay(Divider(), alignment: .bottom)
         }
-        .padding(10.0)
     }
 }
