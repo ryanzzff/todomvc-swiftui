@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State var todos: [Todo] = todosData
         
     var body: some View {
         ZStack {
@@ -15,19 +16,89 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .edgesIgnoringSafeArea(.all)
             
-            VStack {
+            VStack(spacing: 0.0) {
                 Text("todos")
-                    .font(.custom("HelveticaNeue-Thin", size: 100, relativeTo: .largeTitle))
+                    .modifier(FontModifier(style: .largeTitle))
                     .foregroundColor(Color("TitleColor"))
                 
-                ScrollView() {
-                    LazyVStack(spacing: 0) {
-                        ForEach(0 ..< 15) { (index) in
-                            TodoItemView()
+                ZStack {
+                    Color(UIColor.systemBackground)
+                        .padding(.horizontal, 8)
+                        .offset(y: 8)
+                        .modifier(ShadowModifier(style: .small))
+                    
+                    Color(UIColor.systemBackground)
+                        .padding(.horizontal, 4)
+                        .offset(y: 4)
+                        .modifier(ShadowModifier(style: .small))
+                    
+                    Color(UIColor.systemBackground)
+                        .modifier(ShadowModifier(style: .small))
+                    
+                    VStack(spacing: 0.0) {
+                        HStack(spacing: 20.0) {
+                            Button(action: {
+                                // TODO: toggle all button action
+                            }) {
+                                Text("❯").rotationEffect(.degrees(90))
+                                    .modifier(FontModifier(style: .title2))
+                            }
+                            .opacity(todos.count > 0 ? 1 : 0)
+                            .frame(width: 40.0, height: 40.0)
+                            
+                            
+                            Text("What needs to be done?")
+                                .italic()
+                                .modifier(FontModifier(style: .title))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .padding(10.0)
+                        .foregroundColor(Color.primary.opacity(0.3))
+                        .background(Color(UIColor.systemBackground))
+                        .overlay(Divider(), alignment: .bottom)
+                        .modifier(ShadowModifier(style: .small))
+//                        .shadow(color: Color.primary.opacity(0.15), radius: 1, x: 0, y: 2)
+                        
+                        ScrollView() {
+                            LazyVStack(spacing: 0) {
+                                ForEach(todos.indices, id: \.self) { index in
+                                    TodoItemView(todo: $todos[index])
+                                }
+                                
+                                HStack {
+                                    Text("13 items left")
+                                    Spacer()
+                                    HStack {
+                                        Button(action: {}) {
+                                            Text("All")
+                                        }
+                                        .padding(.horizontal, 7)
+                                        .padding(.vertical, 3)
+                                        .overlay(RoundedRectangle(cornerRadius: 3, style: .continuous).stroke(Color("TitleColor")))
+                                        
+                                        Button(action: {}) {
+                                            Text("Active")
+                                        }
+                                        Button(action: {}) {
+                                            Text("Completed")
+                                        }
+                                    }
+                                    Spacer()
+                                    Button(action: {
+                                        // TODO: clear completed
+                                    }) {
+                                        Text("Clear completed")
+                                    }
+                                }
+                                .padding(10.0)
+                                .modifier(FontModifier(style: .footnote))
+                                .foregroundColor(Color.primary.opacity(0.3))
+                            }
+                            .padding(0.0)
                         }
                     }
-                    .padding(0.0)
                 }
+                .frame(maxWidth: 550)
                 
                 Spacer()
                 
@@ -39,9 +110,11 @@ struct HomeView: View {
                     }
                     Text("TodoMVC").bold()
                 }
-                .font(.custom("HelveticaNeue-Thin", size: 14, relativeTo: .footnote))
+                .modifier(FontModifier(style: .footnote))
                 .foregroundColor(Color.primary.opacity(0.3))
+                .padding(.top, 60)
             }.frame(maxWidth: .infinity)
+            .modifier(ShadowModifier())
         }
     }
 }
@@ -56,23 +129,56 @@ struct HomeView_Previews: PreviewProvider {
 }
 
 struct TodoItemView: View {
+    @Binding var todo: Todo
+    
     var body: some View {
         VStack() {
             HStack(spacing: 20.0) {
                 Button(action: {
                     // TODO: button action
                 }) {
-                    Circle()
-                        .strokeBorder(Color.primary.opacity(0.3), lineWidth: 1)
+                    if todo.isCompleted {
+                        Image("toggle_on")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    } else {
+                        Circle()
+                            .strokeBorder(Color.primary.opacity(0.2), lineWidth: 1)
+                    }
                 }
                 .frame(width: 40.0, height: 40.0)
                 
-                Text("todo item")
-                    .font(.custom("HelveticaNeue-Thin", size: 28, relativeTo: .title))
+                Text(todo.title)
+                    .foregroundColor(todo.isCompleted ? Color.primary.opacity(0.3) : Color.primary)
+                    .strikethrough(todo.isCompleted, color: Color.primary.opacity(0.3))
+                    .modifier(FontModifier(style: .title))
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    
             }
             .padding(10.0)
             .overlay(Divider(), alignment: .bottom)
         }
     }
 }
+
+struct Todo: Identifiable {
+    var id = UUID()
+    var isCompleted: Bool
+    var title: String
+}
+
+var todosData = [
+    Todo(isCompleted: true, title: "display header and footer"),
+    Todo(isCompleted: false, title: "hide list and footer if no todos"),
+    Todo(isCompleted: false, title: "display counter"),
+    Todo(isCompleted: false, title: "filter todo by status"),
+    Todo(isCompleted: false, title: "add todo items"),
+    Todo(isCompleted: false, title: "delete todo items"),
+    Todo(isCompleted: false, title: "edit todo items"),
+    Todo(isCompleted: false, title: "mark todo as compelted"),
+    Todo(isCompleted: false, title: "mark all todos as compelted"),
+    Todo(isCompleted: false, title: "clear compelted"),
+    Todo(isCompleted: false, title: "store todo persistently"),
+    
+    
+]

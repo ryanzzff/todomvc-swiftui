@@ -16,6 +16,8 @@
 		2DE774FC25CFD111008B0B40 /* todomvc_swiftuiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE774FB25CFD111008B0B40 /* todomvc_swiftuiTests.swift */; };
 		2DE7750725CFD111008B0B40 /* todomvc_swiftuiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE7750625CFD111008B0B40 /* todomvc_swiftuiUITests.swift */; };
 		2DE7752A25CFD499008B0B40 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE7752925CFD499008B0B40 /* HomeView.swift */; };
+		2DE7752F25D003FA008B0B40 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE7752E25D003FA008B0B40 /* Modifiers.swift */; };
+		2DE7753C25D02362008B0B40 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE7753B25D02362008B0B40 /* DebugView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		2DE7750825CFD111008B0B40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DE7751A25CFD12B008B0B40 /* todomvc-swiftui.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "todomvc-swiftui.entitlements"; sourceTree = "<group>"; };
 		2DE7752925CFD499008B0B40 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		2DE7752E25D003FA008B0B40 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
+		2DE7753B25D02362008B0B40 /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +109,9 @@
 				2DE7751A25CFD12B008B0B40 /* todomvc-swiftui.entitlements */,
 				2DE774E425CFD10F008B0B40 /* todomvc_swiftuiApp.swift */,
 				2DE774E625CFD10F008B0B40 /* ContentView.swift */,
+				2DE7753B25D02362008B0B40 /* DebugView.swift */,
 				2DE7752925CFD499008B0B40 /* HomeView.swift */,
+				2DE7752E25D003FA008B0B40 /* Modifiers.swift */,
 				2DE774E825CFD111008B0B40 /* Assets.xcassets */,
 				2DE774ED25CFD111008B0B40 /* Persistence.swift */,
 				2DE774F225CFD111008B0B40 /* Info.plist */,
@@ -273,7 +279,9 @@
 				2DE774EE25CFD111008B0B40 /* Persistence.swift in Sources */,
 				2DE774E725CFD10F008B0B40 /* ContentView.swift in Sources */,
 				2DE774F125CFD111008B0B40 /* todomvc_swiftui.xcdatamodeld in Sources */,
+				2DE7753C25D02362008B0B40 /* DebugView.swift in Sources */,
 				2DE7752A25CFD499008B0B40 /* HomeView.swift in Sources */,
+				2DE7752F25D003FA008B0B40 /* Modifiers.swift in Sources */,
 				2DE774E525CFD10F008B0B40 /* todomvc_swiftuiApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
