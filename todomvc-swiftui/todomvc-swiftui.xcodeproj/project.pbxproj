@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D28AD4E25D844B300333A94 /* TodoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D28AD4D25D844B300333A94 /* TodoViewModel.swift */; };
 		2DE3BEA525D048CB00B82B5C /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3BEA425D048CB00B82B5C /* View+Extensions.swift */; };
 		2DE774E525CFD10F008B0B40 /* todomvc_swiftuiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE774E425CFD10F008B0B40 /* todomvc_swiftuiApp.swift */; };
 		2DE774E725CFD10F008B0B40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE774E625CFD10F008B0B40 /* ContentView.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D28AD4D25D844B300333A94 /* TodoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewModel.swift; sourceTree = "<group>"; };
 		2DE3BEA425D048CB00B82B5C /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		2DE774E125CFD10F008B0B40 /* todomvc-swiftui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "todomvc-swiftui.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DE774E425CFD10F008B0B40 /* todomvc_swiftuiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todomvc_swiftuiApp.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				2DE774E625CFD10F008B0B40 /* ContentView.swift */,
 				2DE7753B25D02362008B0B40 /* DebugView.swift */,
 				2DE7752925CFD499008B0B40 /* HomeView.swift */,
+				2D28AD4D25D844B300333A94 /* TodoViewModel.swift */,
 				2DE3BEA425D048CB00B82B5C /* View+Extensions.swift */,
 				2DE7752E25D003FA008B0B40 /* Modifiers.swift */,
 				2DE774E825CFD111008B0B40 /* Assets.xcassets */,
@@ -279,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D28AD4E25D844B300333A94 /* TodoViewModel.swift in Sources */,
 				2DE774EE25CFD111008B0B40 /* Persistence.swift in Sources */,
 				2DE774E725CFD10F008B0B40 /* ContentView.swift in Sources */,
 				2DE774F125CFD111008B0B40 /* todomvc_swiftui.xcdatamodeld in Sources */,

@@ -9,10 +9,11 @@ import SwiftUI
 
 struct FontModifier: ViewModifier {
     var style: Font.TextStyle
+    var italic: Bool = false
     
     func body(content: Content) -> some View {
         content
-            .font(.custom("HelveticaNeue-Thin", size: sizeFromStyle(style: style), relativeTo: style))
+            .font(.custom(italic ? "HelveticaNeue-ThinItalic" : "HelveticaNeue-Thin", size: sizeFromStyle(style: style), relativeTo: style))
     }
     
     func sizeFromStyle(style: Font.TextStyle) -> CGFloat {

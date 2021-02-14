@@ -7,9 +7,16 @@
 
 import SwiftUI
 
+enum FilterStatus {
+    case all
+    case active
+    case completed
+}
+
 struct HomeView: View {
-    @State var todos: [Todo] = todosData
-        
+    @ObservedObject var todoVM = TodoViewModel()
+    @State var filteringStatus: FilterStatus = .all
+    
     var body: some View {
         ZStack {
             Color(UIColor.secondarySystemBackground)
@@ -32,7 +39,7 @@ struct HomeView: View {
                                         Text("❯").rotationEffect(.degrees(90))
                                             .modifier(FontModifier(style: .title2))
                                     }
-                                    .opacity(todos.count > 0 ? 1 : 0)
+                                    .opacity(todoVM.todos.count > 0 ? 1 : 0)
                                     .frame(width: 40.0, height: 40.0)
                                     
                                     
@@ -63,30 +70,22 @@ struct HomeView: View {
                                         Color(UIColor.systemBackground)
                                             .modifier(ShadowModifier(style: .small))
                                     }
-                                    .isHidden(todos.count == 0)
+                                    .isHidden(todoVM.todos.count == 0)
                                     
                                     LazyVStack(spacing: 0) {
-                                        ForEach(todos.indices, id: \.self) { index in
-                                            TodoItemView(todo: $todos[index])
+                                        ForEach(todoVM.todos.indices, id: \.self) { index in
+                                            if todoVM.todos[index].isVisible(with: filteringStatus) {
+                                                TodoItemView(todo: $todoVM.todos[index])
+                                            }
                                         }
                                         
                                         HStack {
-                                            Text("\(todos.filter{ !$0.isCompleted }.count) items left")
+                                            Text("\(todoVM.todos.filter{ !$0.isCompleted }.count) items left")
                                             Spacer()
                                             HStack {
-                                                Button(action: {}) {
-                                                    Text("All")
-                                                }
-                                                .padding(.horizontal, 7)
-                                                .padding(.vertical, 3)
-                                                .overlay(RoundedRectangle(cornerRadius: 3, style: .continuous).stroke(Color("TitleColor")))
-                                                
-                                                Button(action: {}) {
-                                                    Text("Active")
-                                                }
-                                                Button(action: {}) {
-                                                    Text("Completed")
-                                                }
+                                                FilterButton(filterStatus: .constant(.all), filteringStatus: $filteringStatus)
+                                                FilterButton(filterStatus: .constant(.active), filteringStatus: $filteringStatus)
+                                                FilterButton(filterStatus: .constant(.completed), filteringStatus: $filteringStatus)
                                             }
                                             Spacer()
                                             Button(action: {
@@ -95,10 +94,10 @@ struct HomeView: View {
                                                 Text("Clear completed")
                                             }
                                         }
-                                        .isHidden(todos.count == 0)
+                                        .isHidden(todoVM.todos.count == 0)
                                         .padding(10.0)
                                         .modifier(FontModifier(style: .footnote))
-                                        .foregroundColor(Color.primary.opacity(0.3))
+                                        .foregroundColor(Color.primary.opacity(0.7))
                                     }
                                     .padding(0.0)
                                 }
@@ -169,24 +168,25 @@ struct TodoItemView: View {
     }
 }
 
-struct Todo: Identifiable {
-    var id = UUID()
-    var isCompleted: Bool
-    var title: String
+struct FilterButton: View {
+    @Binding var filterStatus: FilterStatus
+    @Binding var filteringStatus: FilterStatus
+    
+    var body: some View {
+        Button(action: {
+            filteringStatus = filterStatus
+        }) {
+            switch (self.filterStatus) {
+            case .all:
+                Text("All")
+            case .active:
+                Text("Active")
+            case .completed:
+                Text("Completed")
+            }
+        }
+        .padding(.horizontal, 7)
+        .padding(.vertical, 3)
+        .overlay(RoundedRectangle(cornerRadius: 3, style: .continuous).stroke(filterStatus == filteringStatus ? Color("TitleColor") : Color.clear))
+    }
 }
-
-var todosData: [Todo] = [
-//    Todo(isCompleted: true, title: "display header and footer"),
-    Todo(isCompleted: true, title: "hide list and footer if no todos"),
-    Todo(isCompleted: true, title: "display counter"),
-    Todo(isCompleted: true, title: "filter todo by status"),
-    Todo(isCompleted: false, title: "add todo items"),
-    Todo(isCompleted: false, title: "delete todo items"),
-    Todo(isCompleted: false, title: "edit todo items"),
-//    Todo(isCompleted: false, title: "mark todo as compelted"),
-//    Todo(isCompleted: false, title: "mark all todos as compelted"),
-//    Todo(isCompleted: false, title: "clear compelted"),
-//    Todo(isCompleted: false, title: "store todo persistently"),
-    
-    
-]
