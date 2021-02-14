@@ -21,6 +21,8 @@ class TodoViewModel: ObservableObject {
         Todo(isCompleted: false, title: "clear compelted"),
         Todo(isCompleted: false, title: "store todo persistently"),
     ]
+    
+    @Published var newTodo: String = ""
 }
 
 struct Todo: Identifiable {

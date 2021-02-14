@@ -43,10 +43,14 @@ struct HomeView: View {
                                     .frame(width: 40.0, height: 40.0)
                                     
                                     
-                                    Text("What needs to be done?")
-                                        .italic()
-                                        .modifier(FontModifier(style: .title))
+                                    TextField("What needs to be done?", text: $todoVM.newTodo, onCommit: {
+                                            todoVM.todos.append(Todo(title: todoVM.newTodo))
+                                            todoVM.newTodo = ""
+                                        })
+                                        .modifier(FontModifier(style: .title, italic: todoVM.newTodo.count == 0))
                                         .frame(maxWidth: .infinity, alignment: .leading)
+                                        .foregroundColor(Color.primary.opacity(todoVM.newTodo.count == 0 ? 0.3 : 1))
+                                        .accentColor(Color.primary)
                                 }
                                 .padding(10.0)
                                 .foregroundColor(Color.primary.opacity(0.3))
