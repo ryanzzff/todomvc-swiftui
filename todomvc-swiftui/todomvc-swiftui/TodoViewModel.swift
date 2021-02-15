@@ -14,15 +14,19 @@ class TodoViewModel: ObservableObject {
         Todo(isCompleted: true, title: "display counter"),
         Todo(isCompleted: true, title: "filter todo by status"),
         Todo(isCompleted: true, title: "add todo items"),
-        Todo(isCompleted: false, title: "delete todo items"),
+        Todo(isCompleted: true, title: "delete todo items"),
         Todo(isCompleted: false, title: "edit todo items"),
-        Todo(isCompleted: false, title: "mark todo as compelted"),
-        Todo(isCompleted: false, title: "mark all todos as compelted"),
-        Todo(isCompleted: false, title: "clear compelted"),
+        Todo(isCompleted: false, title: "mark todo as completed"),
+        Todo(isCompleted: false, title: "mark all todos as completed"),
+        Todo(isCompleted: false, title: "clear completed"),
         Todo(isCompleted: false, title: "store todo persistently"),
     ]
     
     @Published var newTodo: String = ""
+    
+    func deleteTodo(at index: Int) {
+        todos.remove(at: index)
+    }
 }
 
 struct Todo: Identifiable {

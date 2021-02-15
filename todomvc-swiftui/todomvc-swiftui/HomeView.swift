@@ -16,6 +16,7 @@ enum FilterStatus {
 struct HomeView: View {
     @ObservedObject var todoVM = TodoViewModel()
     @State var filteringStatus: FilterStatus = .all
+    @State var selectedIndex = -1
     
     var body: some View {
         ZStack {
@@ -79,7 +80,9 @@ struct HomeView: View {
                                     LazyVStack(spacing: 0) {
                                         ForEach(todoVM.todos.indices, id: \.self) { index in
                                             if todoVM.todos[index].isVisible(with: filteringStatus) {
-                                                TodoItemView(todo: $todoVM.todos[index])
+                                                TodoItemView(todo: $todoVM.todos[index], selectedIndex: $selectedIndex, index: index) {
+                                                    todoVM.deleteTodo(at: index)
+                                                }
                                             }
                                         }
                                         
@@ -87,9 +90,9 @@ struct HomeView: View {
                                             Text("\(todoVM.todos.filter{ !$0.isCompleted }.count) items left")
                                             Spacer()
                                             HStack {
-                                                FilterButton(filterStatus: .constant(.all), filteringStatus: $filteringStatus)
-                                                FilterButton(filterStatus: .constant(.active), filteringStatus: $filteringStatus)
-                                                FilterButton(filterStatus: .constant(.completed), filteringStatus: $filteringStatus)
+                                                FilterButton(filterStatus: .constant(.all), filteringStatus: $filteringStatus, selectedIndex: $selectedIndex)
+                                                FilterButton(filterStatus: .constant(.active), filteringStatus: $filteringStatus, selectedIndex: $selectedIndex)
+                                                FilterButton(filterStatus: .constant(.completed), filteringStatus: $filteringStatus, selectedIndex: $selectedIndex)
                                             }
                                             Spacer()
                                             Button(action: {
@@ -141,6 +144,9 @@ struct HomeView_Previews: PreviewProvider {
 
 struct TodoItemView: View {
     @Binding var todo: Todo
+    @Binding var selectedIndex: Int
+    var index: Int
+    var deleteAction: () -> Void
     
     var body: some View {
         VStack() {
@@ -164,10 +170,28 @@ struct TodoItemView: View {
                     .strikethrough(todo.isCompleted, color: Color.primary.opacity(0.3))
                     .modifier(FontModifier(style: .title))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    
             }
             .padding(10.0)
             .overlay(Divider(), alignment: .bottom)
+            .modifier(if: index == selectedIndex, then: { $0.overlay(
+                Button(action: deleteAction) {
+                    Text("×")
+                        .frame(width: 40.0, height: 40.0)
+                        .foregroundColor(Color(#colorLiteral(red: 0.8, green: 0.6039215686, blue: 0.6039215686, alpha: 1)))
+                        .modifier(FontModifier(style: .title))
+                        .padding(.trailing, 10)
+                }.zIndex(1)
+                , alignment: .trailing)
+            })
+        }
+        .contentShape(Rectangle())
+        .onHover { enter in
+            guard !todo.isCompleted else { return }
+            self.selectedIndex = enter ? index : -1
+        }
+        .onTapGesture {
+            guard !todo.isCompleted else { return }
+            self.selectedIndex = self.selectedIndex != index ? index : -1
         }
     }
 }
@@ -175,10 +199,12 @@ struct TodoItemView: View {
 struct FilterButton: View {
     @Binding var filterStatus: FilterStatus
     @Binding var filteringStatus: FilterStatus
+    @Binding var selectedIndex: Int
     
     var body: some View {
         Button(action: {
             filteringStatus = filterStatus
+            selectedIndex = -1
         }) {
             switch (self.filterStatus) {
             case .all:

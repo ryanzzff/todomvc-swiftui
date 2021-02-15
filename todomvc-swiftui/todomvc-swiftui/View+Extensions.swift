@@ -16,3 +16,13 @@ extension View {
         }
     }
 }
+
+extension View {
+    @ViewBuilder func modifier<T: View>(if condition: Bool, then transform: (Self) -> T) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+}
