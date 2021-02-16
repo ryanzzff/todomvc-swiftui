@@ -35,7 +35,10 @@ struct HomeView: View {
                             VStack(spacing: 0.0) {
                                 HStack(spacing: 20.0) {
                                     Button(action: {
-                                        // TODO: toggle all button action
+                                        let markAllDone = todoVM.remainingCount != 0
+                                        for (i, _) in todoVM.todos.enumerated() {
+                                            todoVM.todos[i].isCompleted = markAllDone
+                                        }
                                     }) {
                                         Text("❯").rotationEffect(.degrees(90))
                                             .modifier(FontModifier(style: .title2))
@@ -87,7 +90,7 @@ struct HomeView: View {
                                         }
                                         
                                         HStack {
-                                            Text("\(todoVM.todos.filter{ !$0.isCompleted }.count) items left")
+                                            Text("\(todoVM.remainingCount) items left")
                                             Spacer()
                                             HStack {
                                                 FilterButton(filterStatus: .constant(.all), filteringStatus: $filteringStatus, selectedIndex: $selectedIndex)
@@ -96,7 +99,7 @@ struct HomeView: View {
                                             }
                                             Spacer()
                                             Button(action: {
-                                                // TODO: clear completed
+                                                todoVM.todos = todoVM.todos.filter{ !$0.isCompleted }
                                             }) {
                                                 Text("Clear completed")
                                             }
@@ -152,7 +155,7 @@ struct TodoItemView: View {
         VStack() {
             HStack(spacing: 20.0) {
                 Button(action: {
-                    // TODO: button action
+                    todo.isCompleted.toggle()
                 }) {
                     if todo.isCompleted {
                         Image("toggle_on")

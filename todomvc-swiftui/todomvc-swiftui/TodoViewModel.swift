@@ -24,6 +24,10 @@ class TodoViewModel: ObservableObject {
     
     @Published var newTodo: String = ""
     
+    var remainingCount: Int {
+        get { return todos.filter{ !$0.isCompleted }.count }
+    }
+    
     func deleteTodo(at index: Int) {
         todos.remove(at: index)
     }
