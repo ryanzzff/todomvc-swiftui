@@ -15,10 +15,10 @@ class TodoViewModel: ObservableObject {
         Todo(isCompleted: true, title: "filter todo by status"),
         Todo(isCompleted: true, title: "add todo items"),
         Todo(isCompleted: true, title: "delete todo items"),
-        Todo(isCompleted: false, title: "edit todo items"),
-        Todo(isCompleted: false, title: "mark todo as completed"),
-        Todo(isCompleted: false, title: "mark all todos as completed"),
-        Todo(isCompleted: false, title: "clear completed"),
+        Todo(isCompleted: true, title: "edit todo items"),
+        Todo(isCompleted: true, title: "mark todo as completed"),
+        Todo(isCompleted: true, title: "mark all todos as completed"),
+        Todo(isCompleted: true, title: "clear completed"),
         Todo(isCompleted: false, title: "store todo persistently"),
     ]
     

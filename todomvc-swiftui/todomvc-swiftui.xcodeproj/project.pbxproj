@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2D28AD4E25D844B300333A94 /* TodoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D28AD4D25D844B300333A94 /* TodoViewModel.swift */; };
+		2DC9B53F25EBB25600A92719 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC9B53E25EBB25600A92719 /* Introspect */; };
 		2DE3BEA525D048CB00B82B5C /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3BEA425D048CB00B82B5C /* View+Extensions.swift */; };
 		2DE774E525CFD10F008B0B40 /* todomvc_swiftuiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE774E425CFD10F008B0B40 /* todomvc_swiftuiApp.swift */; };
 		2DE774E725CFD10F008B0B40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE774E625CFD10F008B0B40 /* ContentView.swift */; };
@@ -67,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DC9B53F25EBB25600A92719 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +171,9 @@
 			dependencies = (
 			);
 			name = "todomvc-swiftui";
+			packageProductDependencies = (
+				2DC9B53E25EBB25600A92719 /* Introspect */,
+			);
 			productName = "todomvc-swiftui";
 			productReference = 2DE774E125CFD10F008B0B40 /* todomvc-swiftui.app */;
 			productType = "com.apple.product-type.application";
@@ -240,6 +245,9 @@
 				Base,
 			);
 			mainGroup = 2DE774D825CFD10F008B0B40;
+			packageReferences = (
+				2DC9B53D25EBB25600A92719 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+			);
 			productRefGroup = 2DE774E225CFD10F008B0B40 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -616,6 +624,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2DC9B53D25EBB25600A92719 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2DC9B53E25EBB25600A92719 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2DC9B53D25EBB25600A92719 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		2DE774EF25CFD111008B0B40 /* todomvc_swiftui.xcdatamodeld */ = {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Introspect
 
 enum FilterStatus {
     case all
@@ -17,6 +18,7 @@ struct HomeView: View {
     @ObservedObject var todoVM = TodoViewModel()
     @State var filteringStatus: FilterStatus = .all
     @State var selectedIndex = -1
+    @State var editingIndex = -1
     
     var body: some View {
         ZStack {
@@ -83,8 +85,10 @@ struct HomeView: View {
                                     LazyVStack(spacing: 0) {
                                         ForEach(todoVM.todos.indices, id: \.self) { index in
                                             if todoVM.todos[index].isVisible(with: filteringStatus) {
-                                                TodoItemView(todo: $todoVM.todos[index], selectedIndex: $selectedIndex, index: index) {
+                                                TodoItemView(todo: $todoVM.todos[index], selectedIndex: $selectedIndex,
+                                                             editingIndex: $editingIndex, index: index) {
                                                     todoVM.deleteTodo(at: index)
+                                                    self.selectedIndex = -1
                                                 }
                                             }
                                         }
@@ -148,6 +152,7 @@ struct HomeView_Previews: PreviewProvider {
 struct TodoItemView: View {
     @Binding var todo: Todo
     @Binding var selectedIndex: Int
+    @Binding var editingIndex: Int
     var index: Int
     var deleteAction: () -> Void
     
@@ -168,11 +173,25 @@ struct TodoItemView: View {
                 }
                 .frame(width: 40.0, height: 40.0)
                 
-                Text(todo.title)
-                    .foregroundColor(todo.isCompleted ? Color.primary.opacity(0.3) : Color.primary)
-                    .strikethrough(todo.isCompleted, color: Color.primary.opacity(0.3))
-                    .modifier(FontModifier(style: .title))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                if editingIndex == index {
+                    TextField(todo.title, text: $todo.title, onCommit: {
+                            self.editingIndex = -1
+                        })
+                        .foregroundColor(todo.isCompleted ? Color.primary.opacity(0.3) : Color.primary)
+                        .accentColor(Color.primary)
+                        .modifier(FontModifier(style: .title))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .introspectTextField {
+                            $0.becomeFirstResponder()
+                        }
+                        
+                } else {
+                    Text(todo.title)
+                        .foregroundColor(todo.isCompleted ? Color.primary.opacity(0.3) : Color.primary)
+                        .strikethrough(todo.isCompleted, color: Color.primary.opacity(0.3))
+                        .modifier(FontModifier(style: .title))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
             .padding(10.0)
             .overlay(Divider(), alignment: .bottom)
@@ -192,7 +211,13 @@ struct TodoItemView: View {
             guard !todo.isCompleted else { return }
             self.selectedIndex = enter ? index : -1
         }
+        .onTapGesture(count: 2, perform: {
+            self.selectedIndex = -1
+            guard !todo.isCompleted else { return }
+            self.editingIndex = self.editingIndex != index ? index : -1
+        })
         .onTapGesture {
+            self.editingIndex = -1
             guard !todo.isCompleted else { return }
             self.selectedIndex = self.selectedIndex != index ? index : -1
         }
